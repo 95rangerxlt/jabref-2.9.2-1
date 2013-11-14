@@ -112,11 +112,15 @@ public class DBConnectDialog extends JDialog {
         txtDatabase.setText(dbStrings.getDatabase());
         txtUsername.setText(dbStrings.getUsername());
         pwdPassword.setText(dbStrings.getPassword());
-
+        
+        //------------------------------
+        extractUsers();           //coloquei este método aqui para já combinar o nome do banco de dados com seu respectivo usuário na abertura desta janela de visualização
+        //---------------------------------
+        
 
         // construct dialog
         DefaultFormBuilder builder = new DefaultFormBuilder(new
-                                 FormLayout("right:pref, 4dlu, fill:pref", ""));
+                                 FormLayout("right:pref, 4dlu, fill:pref", ""));  
 
         builder.getPanel().setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
@@ -165,15 +169,30 @@ public class DBConnectDialog extends JDialog {
                     JOptionPane.showMessageDialog(null, errorMessage,
                             "Input Error", JOptionPane.ERROR_MESSAGE);
                 }
-
+                
             }
         };
+    
+        //----------------------------------------------------------------------------------------------------        
+        ActionListener verificaAction = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+              
+            	extractUsers();               //esta action foi colocada para estar sempre verificando se o nome do banco de dados corresponde ao do seu usuário
+           
+            }
+        };
+        
+        //--------------------------------------------------------------------------------------------------------------------   
+        
 
         btnConnect.addActionListener(connectAction);
         txtDatabase.addActionListener(connectAction);
         txtServerHostname.addActionListener(connectAction);
         txtUsername.addActionListener(connectAction);
         pwdPassword.addActionListener(connectAction);
+        
+        cmbServerType.addActionListener(verificaAction);  //tive que acrescentar esta ação ao comboBox
 
         AbstractAction cancelAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
@@ -190,6 +209,24 @@ public class DBConnectDialog extends JDialog {
         im.put(Globals.prefs.getKey("Close dialog"), "close");
         am.put("close", cancelAction);
     }
+
+	
+		//-------------------------------------------------------------------------------------------
+        
+	private void extractUsers() {
+		if (cmbServerType.getSelectedItem().toString().equals("MySQL")) {
+			System.out.println(cmbServerType.getSelectedItem().toString());
+			txtUsername.setText("root");
+                                                                      //método adicionado para tentar solucionar a mudança solicitada
+		} else if (cmbServerType.getSelectedItem().toString()
+				.equals("PostgreSQL")) {
+			System.out.println(cmbServerType.getSelectedItem().toString());
+			txtUsername.setText("postgres");
+
+		}
+	}
+       //-----------------------------------------------------------------------------------------------
+	
 
     /**
      * Checks the user input, and ensures that required fields have entries
@@ -217,7 +254,7 @@ public class DBConnectDialog extends JDialog {
             errors[cnt] = fields[2];
             cnt++;
         }
-
+        
         String errMsg = Globals.lang("Please specify the ");
 
         switch (cnt) {

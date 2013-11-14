@@ -242,8 +242,20 @@ public class JabRefPreferences {
         defaults.put("searchAutoComplete", Boolean.TRUE);
         defaults.put("saveInStandardOrder", Boolean.TRUE);
         defaults.put("saveInOriginalOrder", Boolean.FALSE);
+        
+        
+        defaults.put("salvarInOrdemTitulo", Boolean.FALSE);
+             
+        
+        
         defaults.put("exportInStandardOrder", Boolean.TRUE);
         defaults.put("exportInOriginalOrder", Boolean.FALSE);
+        
+        
+        defaults.put("exportarInOrdemTitulo", Boolean.FALSE);
+        
+        
+        
         defaults.put("selectS", Boolean.FALSE);
         defaults.put("regExpSearch", Boolean.TRUE);
         defaults.put("highLightWords", Boolean.TRUE);

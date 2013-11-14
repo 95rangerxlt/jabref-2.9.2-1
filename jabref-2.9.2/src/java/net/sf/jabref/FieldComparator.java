@@ -48,7 +48,7 @@ public class FieldComparator implements Comparator<BibtexEntry> {
 	private String[] field;
     private String fieldName;
 
-    boolean isNameField, isTypeHeader, isYearField, isMonthField, isNumeric;
+    boolean isNameField, isTypeHeader, isYearField, isMonthField, isNumeric, isTitleField;
 
 	int multiplier;
 
@@ -61,10 +61,17 @@ public class FieldComparator implements Comparator<BibtexEntry> {
         this.field = field.split(MainTableFormat.COL_DEFINITION_FIELD_SEPARATOR);
 		multiplier = reversed ? -1 : 1;
 		isTypeHeader = this.field[0].equals(GUIGlobals.TYPE_HEADER);
-        isNameField = (this.field[0].equals("author")
-                || this.field[0].equals("editor"));
+		
+		//////////////////////////////////////////////////////////////////
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        isNameField = (this.field[0].equals("author") || this.field[0].equals("editor")) || this.field[0].equals("title");
+        
+        
 		isYearField = this.field[0].equals("year");
 		isMonthField = this.field[0].equals("month");
+		
+		//isTitleField = this.field[0].equals("title");
+		
         isNumeric = BibtexFields.isNumeric(this.field[0]);
     }
 

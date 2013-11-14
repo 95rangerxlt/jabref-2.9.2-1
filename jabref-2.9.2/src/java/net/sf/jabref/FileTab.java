@@ -170,20 +170,21 @@ public class FileTab extends JPanel implements PrefsTab {
             saveAuthorOrder.setSelected(true);
         else if (_prefs.getBoolean("saveInOriginalOrder"))
             saveOriginalOrder.setSelected(true);
-        else //if (_prefs.getBoolean("saveInTableOrder"))
-             saveTableOrder.setSelected(true);
-        /*else
-        	salvarOrdemTitulo.setSelected(true);*/
+        else if (_prefs.getBoolean("salvarInOrdemTitulo"))
+        	salvarOrdemTitulo.setSelected(true);
+        else
+        	saveTableOrder.setSelected(true);
+        
         
         
         if (_prefs.getBoolean("exportInStandardOrder"))
             exportAuthorOrder.setSelected(true);
         else if (_prefs.getBoolean("exportInOriginalOrder"))
             exportOriginalOrder.setSelected(true);
-        else //if (_prefs.getBoolean("exportInTableOrder"))
+        else if (_prefs.getBoolean("exportarInOrdemTitulo"))
+        	exportarOrdemTitulo.setSelected(true);
+        else
         	exportTableOrder.setSelected(true);
-        /*else
-        	exportarOrdemTitulo.setSelected(true);*/
             
 
         
@@ -210,6 +211,12 @@ public class FileTab extends JPanel implements PrefsTab {
         _prefs.putBoolean("saveInOriginalOrder", saveOriginalOrder.isSelected());
         
         _prefs.putBoolean("saveInTableOrder", saveTableOrder.isSelected());
+        
+        //////////////////////////////////////////////////////////////////
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        _prefs.putBoolean("salvarInOrdemTitulo", salvarOrdemTitulo.isSelected());
+        _prefs.putBoolean("exportarInOrdemTitulo", exportarOrdemTitulo.isSelected());
+        
         
         _prefs.putBoolean("exportInStandardOrder", exportAuthorOrder.isSelected());
         _prefs.putBoolean("exportInOriginalOrder", exportOriginalOrder.isSelected());

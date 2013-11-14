@@ -267,6 +267,10 @@ public class FileActions
 
 
 	}
+    
+    
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //Metodo que iremos editar para realizar a tarefa...
 
     /**
 	 * Saves the database to file, including only the entries included in the
@@ -448,8 +452,37 @@ public class FileActions
 	public static List<BibtexEntry> getSortedEntries(BibtexDatabase database, Set<String> keySet, boolean isSaveOperation) {
         FieldComparatorStack<BibtexEntry> comparatorStack = null;
 
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        /*boolean inOrdemTitulo = isSaveOperation ? Globals.prefs.getBoolean("salvarInOrdemTitulo") :
+            Globals.prefs.getBoolean("exportarInOrdemTitulo");
+       
+        if (inOrdemTitulo) {
+         
+        	 List<Comparator<BibtexEntry>> comparators = new ArrayList<Comparator<BibtexEntry>>();
+        	 comparators.add(new FieldComparator("title", false));
+             comparators.add(new FieldComparator(BibtexFields.KEY_FIELD));
+
+             comparatorStack = new FieldComparatorStack<BibtexEntry>(comparators);
+        }*/
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         boolean inOriginalOrder = isSaveOperation ? Globals.prefs.getBoolean("saveInOriginalOrder") :
             Globals.prefs.getBoolean("exportInOriginalOrder");
+       
         if (inOriginalOrder) {
             // Sort entries based on their creation order, utilizing the fact
             // that IDs used for entries are increasing, sortable numbers.
@@ -459,13 +492,47 @@ public class FileActions
             comparatorStack = new FieldComparatorStack<BibtexEntry>(comparators);
 
         } else {
+        	
+        	
             String pri, sec, ter;
             boolean priD, secD, terD = false;
 
             boolean inStandardOrder = isSaveOperation ? Globals.prefs.getBoolean("saveInStandardOrder") :
                 Globals.prefs.getBoolean("exportInStandardOrder");
+            
+            
             if (!inStandardOrder) {
-                // The setting is to save according to the current table order.
+            	
+            	
+            	
+            	boolean inOrdemTitulo = isSaveOperation ? Globals.prefs.getBoolean("salvarInOrdemTitulo") :
+                    Globals.prefs.getBoolean("exportarInOrdemTitulo");
+            	
+            	
+            	if(!inStandardOrder && inOrdemTitulo){
+            		
+            		pri = "title";
+                    sec = "editor";
+                    ter = "year";
+                    priD = false;
+                    secD = false;
+                    terD = true;
+            		
+            	}  
+            	
+            	
+            	else/*if(!inStandardOrder && !inOrdemTitulo)*/{
+            		// The setting is to save according to the current table order.
+                    pri = Globals.prefs.get("priSort");
+                    sec = Globals.prefs.get("secSort");
+                    // sorted as they appear on the screen.
+                    ter = Globals.prefs.get("terSort");
+                    priD = Globals.prefs.getBoolean("priDescending");
+                    secD = Globals.prefs.getBoolean("secDescending");
+                    terD = Globals.prefs.getBoolean("terDescending");
+            		
+            	}        
+                /*// The setting is to save according to the current table order.
                 pri = Globals.prefs.get("priSort");
                 sec = Globals.prefs.get("secSort");
                 // sorted as they appear on the screen.
@@ -474,6 +541,14 @@ public class FileActions
                 secD = Globals.prefs.getBoolean("secDescending");
                 terD = Globals.prefs.getBoolean("terDescending");
 
+                
+                */
+                
+                
+                
+                
+                
+                
             } else {
                 // The setting is to save in standard order: author, editor, year
                 pri = "author";
@@ -494,6 +569,9 @@ public class FileActions
 
             comparatorStack = new FieldComparatorStack<BibtexEntry>(comparators);
         }
+        
+        
+        
         // Use glazed lists to get a sorted view of the entries:
         BasicEventList entryList = new BasicEventList();
         SortedList sorter = new SortedList(entryList, comparatorStack);

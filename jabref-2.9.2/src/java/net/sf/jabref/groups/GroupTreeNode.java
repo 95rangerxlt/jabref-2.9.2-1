@@ -40,6 +40,10 @@ public class GroupTreeNode extends DefaultMutableTreeNode implements
 	public static final DataFlavor flavor;
 	public static final DataFlavor[] flavors;
 
+	public int getNum(){
+		return flavors.length;
+	}
+	
 	static {
 		DataFlavor df = null;
 		try {

@@ -97,15 +97,32 @@ public class AddToGroupAction extends AbstractAction {
             // first remove
             for (int i = 0; i < removeGroupsNodes.size(); ++i) {
                 GroupTreeNode node = removeGroupsNodes.elementAt(i);
-                if (node.getGroup().containsAny(entries))
+                if (node.getGroup().containsAny(entries)){
                     undoAll.addEdit(node.removeFromGroup(entries));
+                    
+                    //TODO Modifiquei aqui
+                    node.getGroup().rmNode(); //Decrementa contador
+                }
             }
             // then add
             AbstractUndoableEdit undoAdd = m_node.addToGroup(entries);
-            if (undoAdd != null)
+            if (undoAdd != null){
                 undoAll.addEdit(undoAdd);
+                
+            	//TODO incrementa contador
+                for(int z = 0 ; z < entries.length ; z++){
+                	m_node.getGroup().addNode();
+                }            	
+            }
+            
         } else {
             AbstractUndoableEdit undoAdd = m_node.addToGroup(entries);
+            
+            //TODO apenas incrementa.
+            for(int z = 0 ; z < entries.length ; z++){
+            	m_node.getGroup().addNode();
+            } 
+            
             if (undoAdd == null)
                 return; // no changed made
             undoAll.addEdit(undoAdd);

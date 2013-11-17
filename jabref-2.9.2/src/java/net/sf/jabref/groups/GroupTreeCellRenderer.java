@@ -90,7 +90,11 @@ public class GroupTreeCellRenderer extends DefaultTreeCellRenderer {
                 }
             }
         }
-        String name = group.getName();
+        
+        //TODO aqui!
+        
+        String name = group.getName()+"["+((GroupTreeNode) value).getGroup().getNodes()+"]";
+        
         if (name.length() > MAX_DISPLAYED_LETTERS)
             name = name.substring(0, MAX_DISPLAYED_LETTERS-2)+"...";
         StringBuffer sb = new StringBuffer();

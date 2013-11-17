@@ -50,6 +50,12 @@ public class RemoveFromGroupAction extends AbstractAction {
             return; // user aborted operation
         
         AbstractUndoableEdit undo = m_node.removeFromGroup(m_panel.getSelectedEntries());
+        
+        //TODO decrementa
+        for(int z = 0 ; z < m_panel.getSelectedEntries().length; z++){
+        	m_node.getGroup().rmNode();
+        } 
+        
         if (undo == null)
             return; // no changed made
         

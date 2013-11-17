@@ -30,6 +30,8 @@ public abstract class AbstractGroup {
 
     /** The group's name (every type of group has one). */
 	protected String m_name;
+	
+	private int nodes;//Itens do grupo!
 
 	/**
 	 * The hierarchical context of the group (INDEPENDENT, REFINING, or
@@ -43,8 +45,20 @@ public abstract class AbstractGroup {
     public AbstractGroup(String name, int context) {
 		m_name = name;
 		setHierarchicalContext(context);
+		nodes = 0;
 	}
 
+    public void addNode(){
+    	nodes++;
+    }
+    
+    public void rmNode(){
+    	nodes--;
+    }
+    
+    public int getNodes(){
+    	return nodes;
+    }
 	/** Group's contents are independent of its hierarchical position. */
 	public static final int INDEPENDENT = 0;
 	/**

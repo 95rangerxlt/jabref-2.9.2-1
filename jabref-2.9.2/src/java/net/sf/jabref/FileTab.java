@@ -37,7 +37,7 @@ public class FileTab extends JPanel implements PrefsTab {
 
     private JCheckBox backup, openLast, autoDoubleBraces, autoSave, promptBeforeUsingAutoSave;
     private JRadioButton
-        saveOriginalOrder, saveAuthorOrder, saveTableOrder,
+        saveOriginalOrder, saveAuthorOrder, saveTableOrder, salvarOrdemTitulo, exportarOrdemTitulo, 
         exportOriginalOrder, exportAuthorOrder, exportTableOrder,
         resolveStringsStandard, resolveStringsAll;
     private JTextField bracesAroundCapitalsFields, nonWrappableFields,
@@ -60,6 +60,10 @@ public class FileTab extends JPanel implements PrefsTab {
         exportOriginalOrder = new JRadioButton(Globals.lang("Export entries in their original order"));
         saveTableOrder = new JRadioButton(Globals.lang("Save in current table sort order"));
         exportTableOrder = new JRadioButton(Globals.lang("Export in current table sort order"));
+        
+        salvarOrdemTitulo = new JRadioButton(Globals.lang("Salvar ordem por titulo"));
+        exportarOrdemTitulo = new JRadioButton(Globals.lang("Exportar ordem por titulo"));
+        
         autoSave = new JCheckBox(Globals.lang("Autosave"));
         promptBeforeUsingAutoSave = new JCheckBox(Globals.lang("Prompt before recovering a database from an autosave file"));
         autoSaveInterval = new JSpinner(new SpinnerNumberModel(1, 1, 60, 1));
@@ -67,10 +71,16 @@ public class FileTab extends JPanel implements PrefsTab {
         bg.add(saveAuthorOrder);
         bg.add(saveOriginalOrder);
         bg.add(saveTableOrder);
+        
+        bg.add(salvarOrdemTitulo);
+        
         bg = new ButtonGroup();
         bg.add(exportAuthorOrder);
         bg.add(exportOriginalOrder);
         bg.add(exportTableOrder);
+        
+        bg.add(exportarOrdemTitulo);
+        
         resolveStringsAll = new JRadioButton(Globals.lang("Resolve strings for all fields except")+":");
         resolveStringsStandard = new JRadioButton(Globals.lang("Resolve strings for standard BibTeX fields only"));
         bg = new ButtonGroup();
@@ -142,6 +152,10 @@ public class FileTab extends JPanel implements PrefsTab {
         builder.append(saveOriginalOrder, 1);
         builder.append(exportOriginalOrder, 1);
         builder.nextLine();
+        
+        builder.append(salvarOrdemTitulo, 1);
+        builder.append(exportarOrdemTitulo, 1);
+        builder.nextLine();
 
         JPanel pan = builder.getPanel();
         pan.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -156,15 +170,26 @@ public class FileTab extends JPanel implements PrefsTab {
             saveAuthorOrder.setSelected(true);
         else if (_prefs.getBoolean("saveInOriginalOrder"))
             saveOriginalOrder.setSelected(true);
+        else if (_prefs.getBoolean("salvarInOrdemTitulo"))
+        	salvarOrdemTitulo.setSelected(true);
         else
-            saveTableOrder.setSelected(true);
+        	saveTableOrder.setSelected(true);
+        
+        
+        
         if (_prefs.getBoolean("exportInStandardOrder"))
             exportAuthorOrder.setSelected(true);
         else if (_prefs.getBoolean("exportInOriginalOrder"))
             exportOriginalOrder.setSelected(true);
+        else if (_prefs.getBoolean("exportarInOrdemTitulo"))
+        	exportarOrdemTitulo.setSelected(true);
         else
-            exportTableOrder.setSelected(true);
+        	exportTableOrder.setSelected(true);
+            
 
+        
+        
+        
         //preserveFormatting.setSelected(_prefs.getBoolean("preserveFieldFormatting"));
         autoDoubleBraces.setSelected(_prefs.getBoolean("autoDoubleBraces"));
         resolveStringsAll.setSelected(_prefs.getBoolean("resolveStringsAllFields"));
@@ -184,8 +209,20 @@ public class FileTab extends JPanel implements PrefsTab {
         _prefs.putBoolean("openLastEdited", openLast.isSelected());
         _prefs.putBoolean("saveInStandardOrder", saveAuthorOrder.isSelected());
         _prefs.putBoolean("saveInOriginalOrder", saveOriginalOrder.isSelected());
+        
+        _prefs.putBoolean("saveInTableOrder", saveTableOrder.isSelected());
+        
+        //////////////////////////////////////////////////////////////////
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        _prefs.putBoolean("salvarInOrdemTitulo", salvarOrdemTitulo.isSelected());
+        _prefs.putBoolean("exportarInOrdemTitulo", exportarOrdemTitulo.isSelected());
+        
+        
         _prefs.putBoolean("exportInStandardOrder", exportAuthorOrder.isSelected());
         _prefs.putBoolean("exportInOriginalOrder", exportOriginalOrder.isSelected());
+        
+        _prefs.putBoolean("exportInTableOrder", exportTableOrder.isSelected());
+        
         _prefs.putBoolean("autoDoubleBraces", autoDoubleBraces.isSelected());
         _prefs.putBoolean("resolveStringsAllFields", resolveStringsAll.isSelected());
         _prefs.put("doNotResolveStringsFor", doNotResolveStringsFor.getText().trim());

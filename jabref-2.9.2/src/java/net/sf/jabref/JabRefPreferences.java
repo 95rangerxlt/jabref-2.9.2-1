@@ -242,8 +242,20 @@ public class JabRefPreferences {
         defaults.put("searchAutoComplete", Boolean.TRUE);
         defaults.put("saveInStandardOrder", Boolean.TRUE);
         defaults.put("saveInOriginalOrder", Boolean.FALSE);
+        
+        
+        defaults.put("salvarInOrdemTitulo", Boolean.FALSE);
+             
+        
+        
         defaults.put("exportInStandardOrder", Boolean.TRUE);
         defaults.put("exportInOriginalOrder", Boolean.FALSE);
+        
+        
+        defaults.put("exportarInOrdemTitulo", Boolean.FALSE);
+        
+        
+        
         defaults.put("selectS", Boolean.FALSE);
         defaults.put("regExpSearch", Boolean.TRUE);
         defaults.put("highLightWords", Boolean.TRUE);
@@ -927,13 +939,13 @@ public class JabRefPreferences {
     private void defineDefaultKeyBindings() {
         defKeyBinds.put("Push to application","ctrl L");
       defKeyBinds.put("Push to LyX","ctrl L");
-      defKeyBinds.put("Push to WinEdt","ctrl shift W");
+      defKeyBinds.put("Push to WinEdt","ctrl W");
         defKeyBinds.put("Quit JabRef", "ctrl Q");
         defKeyBinds.put("Open database", "ctrl O");
         defKeyBinds.put("Save database", "ctrl S");
         defKeyBinds.put("Save database as ...", "ctrl shift S");
         defKeyBinds.put("Save all", "ctrl alt S");
-        defKeyBinds.put("Close database", "ctrl W");
+        defKeyBinds.put("Close database", "ctrl shift W");
         defKeyBinds.put("New entry", "ctrl N");
         defKeyBinds.put("Cut", "ctrl X");
         defKeyBinds.put("Copy", "ctrl C");

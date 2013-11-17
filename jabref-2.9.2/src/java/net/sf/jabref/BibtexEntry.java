@@ -60,6 +60,15 @@ public class BibtexEntry
     {
         this(id, BibtexEntryType.OTHER);
     }
+    
+    public String getAuthor(){
+    	return getField("author");
+    }
+    
+public void setAuthor(String author){
+    	setField("author", author);
+    }
+
 
     public BibtexEntry(String id, BibtexEntryType type)
     {

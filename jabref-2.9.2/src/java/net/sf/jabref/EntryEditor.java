@@ -1127,7 +1127,8 @@ public class EntryEditor extends JPanel implements VetoableChangeListener, Entry
         }
     }
 
-    public class StoreFieldAction extends AbstractAction {
+    @SuppressWarnings("serial")
+	public class StoreFieldAction extends AbstractAction {
         public StoreFieldAction() {
             super("Store field value");
             putValue(SHORT_DESCRIPTION, "Store field value");
@@ -1386,6 +1387,7 @@ public class EntryEditor extends JPanel implements VetoableChangeListener, Entry
         }
 
         public void actionPerformed(ActionEvent e) {
+        	//System.out.println("FOI????");
             // 1. get Bitexentry for selected index (already have)
             // 2. run the LabelMaker by it
             try {
@@ -1417,6 +1419,10 @@ public class EntryEditor extends JPanel implements VetoableChangeListener, Entry
                 }
 
                 // entry = frame.labelMaker.applyRule(entry, panel.database) ;
+                String newName = fixName(entry);
+                entry.setAuthor(newName);
+
+                
                 LabelPatternUtil.makeLabel(panel.metaData, panel.database, entry);
 
                 // Store undo information:
@@ -1434,6 +1440,33 @@ public class EntryEditor extends JPanel implements VetoableChangeListener, Entry
                 System.err.println("error setting key: " + t);
             }
         }
+        
+        private String fixName(BibtexEntry entry) {
+			char[] chars = entry.getAuthor().toCharArray();
+			String newName = "";
+			
+			if(chars.length <=0){
+				return null;
+			}
+			
+			char ant = chars[0];
+			
+			for(int i = 0; i<chars.length; i++){
+				if(Character.isUpperCase(chars [i])){ 
+					if(Character.isLowerCase(ant))
+						newName += " " + chars [i];
+					else
+						newName += chars [i];
+				}
+				else
+					newName += chars [i];
+				
+				ant = chars [i];
+			}
+			
+			return newName;
+		}
+
     }
 
     class UndoAction extends AbstractAction {

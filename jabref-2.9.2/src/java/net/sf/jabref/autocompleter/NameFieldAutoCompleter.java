@@ -150,12 +150,87 @@ public class NameFieldAutoCompleter extends AbstractAutoCompleter {
 	public String[] complete(String str) {
 		// Normally, one would implement that using 
 		// class inheritance. But this seemed to overengineered
+
+
+		
+		
+//CORRIGIR AUTO COMPLETAR NA PESQUISA	
+		String corautocompl = ""; //GRUPO 05
+
+		
 		if (this.lastNameOnlyAndSeparationBySpace) {
 			str = determinePrefixAndReturnRemainder_SPACE(str);
 		} else {
 			str = determinePrefixAndReturnRemainder_AND(str);
 		}
         String[] res = super.complete(str);
+
+        
+        
+//-----------------------------------------------------------------------------------------------        
+        String resultado="";
+        if(res != null){
+        	char cskp=0;
+        	int pcskp=1000;
+        	for(int i=0; i<res.length; i++){
+        		corautocompl = res[i];	//Corrigir Auto Completar Pesquisa
+
+//        		System.out.println("-->> 1: "+corautocompl);
+//        		System.out.println("Tam: "+corautocompl.length());
+ 
+        		for (int j=0; j<corautocompl.length(); j++){
+        			char c = corautocompl.charAt(j);
+        			
+//        			System.out.println("caracter: " + c);
+//        			System.out.println("posicao: "+j);
+//        			System.out.println("SKPA: "+cskp);
+//        			System.out.println("PSKPA: "+pcskp);
+
+        			//SALVAR POSICAO DA BARRA \
+        			if(c == '\\' ){
+        				cskp = c;
+        				pcskp = j;
+//        				System.out.println("pre fixo: "+cskp);
+        			}
+        			else{
+        				
+        				if((pcskp==j-1 ) && (c == '\'' || c == '\"' || c == '.' || c == 'H' || c == 'd' || c == '0' || c == 'a' || c == '`' || c == '~' || c == 'u' || c == 'b' || c == 'A' || c == '1' || c == '^' || c == '=')){    // 1's caracteres especiais
+        					char ch1dskp=c;
+            			}
+        				else{
+        					
+        					if((pcskp==j-2) && ( c == '{' || c == 'E' || c == 'a' || c == 's' || c == 'e' || c == 'A')) {    // 2's caracteres especiais
+        						
+        					}
+        					else{
+            					if((pcskp==j-4)&& (c == '}')){
+            					}
+            						else{
+            							if((pcskp==j-5)&&(c == '}')){
+            								
+            							}
+                           				else{
+                            				resultado+=c;
+                            			}
+            						}
+        					}
+        				}
+        			}
+
+//        			System.out.println("Res Final: "+resultado);
+        		}
+        		
+        		res[i]=resultado;
+//        		System.out.println(resultado);
+//        		System.out.println(i);
+
+        	}
+        }
+
+//-------------------------------------------------------------------------------------------------       
+        
+        
+        
         return res;
 	}
 
